@@ -22,12 +22,12 @@ def getToken(client):
         return client.cookies['csrftoken']
     else:
         return client.cookies['csrf']
-
 def loginToAPI(client, token):
+    print("TOKEN, ", token)
     login_data = dict(email=EMAIL, password=PASSWORD, csrfmiddlewaretoken=token, next='/')
     r = client.post(API, data=login_data, headers=dict(Referer=API))
     return (r.status_code)
-    #print("LOGIN", r.status_code, r.reason)
+    print("LOGIN", r.status_code, r.reason)
 
 def update(bot, job):
     """Revisa si hay nuevos comentarios"""
@@ -41,6 +41,7 @@ def update(bot, job):
     s = client.get("http://openedx.ing.puc.cl/api/discussion/v1/threads/?course_id=course-v1%3APUC%2BIIC2333_II%2BIIC2333_II_2018&sort_order=desc")
     #print("GET COMMENTS", s.status_code, s.reason)
     answer = s.json()
+    print(answer)
     if len(OLD_DATA) == 0:
         OLD_DATA = answer['results']
         NEW_DATA = OLD_DATA
@@ -125,6 +126,7 @@ def error(bot, update, error):
 
 
 def main():
+    print("hola")
     updater = Updater(BOT_TOKEN)
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", start))
