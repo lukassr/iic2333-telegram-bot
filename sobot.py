@@ -126,19 +126,22 @@ def error(bot, update, error):
 
 
 def main():
-    print("hola")
-    updater = Updater(BOT_TOKEN)
-    dp = updater.dispatcher
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("help", start))
-    dp.add_handler(CommandHandler("login", login,
-                                    pass_args=True,
-                                    pass_job_queue=True,
-                                    pass_chat_data=True))
-    dp.add_handler(CommandHandler("update", update))
-    dp.add_error_handler(error)
-    updater.start_polling()
-    updater.idle()
+    try:
+        print("hola")
+        updater = Updater(BOT_TOKEN)
+        dp = updater.dispatcher
+        dp.add_handler(CommandHandler("start", start))
+        dp.add_handler(CommandHandler("help", start))
+        dp.add_handler(CommandHandler("login", login,
+                                        pass_args=True,
+                                        pass_job_queue=True,
+                                        pass_chat_data=True))
+        dp.add_handler(CommandHandler("update", update))
+        dp.add_error_handler(error)
+        updater.start_polling()
+        updater.idle()
+    except(error):
+        print(error)
 
 if __name__ == '__main__':
     main()
